@@ -40,16 +40,20 @@ jobs:
 
       - name: Notify Slack about success
         if: success()
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: rtCamp/action-slack-notify@v2
         with:
-          webhook-type: 'incoming-webhook'  # или 'webhook-trigger'
-          token: ${{ secrets.SLACK_WEBHOOK_URL }}
-          payload: '{"text": ":white_check_mark: Build successful!", "attachments": [{"color": "good"}]}'
-    
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          message: ":white_check_mark: Build successful!"
+          channel: "#Alexandr Misyukevich"
+          username: "GitHub Actions"
+          icon_emoji: ":rocket:"
+
       - name: Notify Slack about failure
         if: failure()
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: rtCamp/action-slack-notify@v2
         with:
-          webhook-type: 'incoming-webhook'  # или 'webhook-trigger'
-          token: ${{ secrets.SLACK_WEBHOOK_URL }}
-          payload: '{"text": ":x: Build failed!", "attachments": [{"color": "danger"}]}'
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          message: ":x: Build failed!"
+          channel: "#Alexandr Misyukevich"
+          username: "GitHub Actions"
+          icon_emoji: ":warning:"
