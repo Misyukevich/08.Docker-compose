@@ -38,22 +38,13 @@ jobs:
         run: |
           docker push misyukevich/pyapp
 
-      - name: Notify Slack about success
-        if: success()
+      - name: Slack Notification
+        if: always()
         uses: rtCamp/action-slack-notify@v2
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          message: ":white_check_mark: Build successful!"
-          channel: "#Alexandr Misyukevich"
-          username: "GitHub Actions"
-          icon_emoji: ":rocket:"
-
-      - name: Notify Slack about failure
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          message: ":x: Build failed!"
-          channel: "#Alexandr Misyukevich"
-          username: "GitHub Actions"
-          icon_emoji: ":warning:"
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: "Image build result for ${{ github.repository }}"
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE: |
+            Result is ${{ job.status }}
+            Commit message: ${{ github.event.head_commit.message }}
