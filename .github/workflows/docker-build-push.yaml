@@ -28,15 +28,15 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t misyukevich/PyApp .
+          docker build -t misyukevich/pyapp .
 
       - name: Run Docker container
         run: |
-          docker run -d -p 5000:5000 misyukevich/PyApp
+          docker run -d -p 5000:5000 misyukevich/pyapp
 
       - name: Push Docker image
         run: |
-          docker push misyukevich/PyApp
+          docker push misyukevich/pyapp
 
       - name: Notify Slack about success
         if: success()
